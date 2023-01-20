@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notice_2_parents/Auth/login_page.dart';
+import 'package:notice_2_parents/Screen/profile.dart';
 
 void main() {
   runApp(
@@ -20,8 +21,8 @@ class notice_2_parents extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       //home: Screen_page(),
-      home: Login_page(),
-      //home: const Sign_up_page(),
+      //home: Profile_page(),
+      home: const Login_page(),
     );
   }
 }
