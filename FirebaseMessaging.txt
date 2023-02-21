@@ -1,0 +1,99 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+class FirebaseMessagingService {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
+  void configureFirebaseMessaging() {
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("Message received: $message");
+        // Afficher la notification ici
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("Application lauched from notification: $message");
+        // Naviguer vers une page spécifique ici
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("Application resumed from notification: $message");
+        // Naviguer vers une page spécifique ici
+      },
+    );
+  }
+
+  Future<NotificationSettings> requestPermission() {
+    return _firebaseMessaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+  }
+}
+
+
+
+###########################################CLASSE NOTIFICATION############################################
+
+import 'package:flutter/material.dart';
+import 'package:notice_2_parents/Screen/NotificationService.dart';
+import 'package:notice_2_parents/Screen/NotificationSetting.dart';
+
+class Notification_Page extends StatefulWidget {
+  @override
+  _Notification_PageState createState() => _Notification_PageState();
+}
+
+class _Notification_PageState extends State<Notification_Page> {
+  List<String> _notifications = [];
+
+  void addNotification(String notification) {
+    setState(() {
+      _notifications.add(notification);
+      print("Notification added: $notification");
+    });
+  }
+
+  NotificationService notificationService = NotificationService();
+
+  void refreshNotifications() {
+    addNotification("Nouvelle remise de notes");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("Rebuilding widget with ${_notifications.length} notifications");
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.brown,
+        title: Text('Notifications'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: appuye,
+          ),
+        ],
+      ),
+      body: ListView.builder(
+        itemCount: _notifications.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(_notifications[index]),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.brown,
+        onPressed: () {
+          refreshNotifications();
+        },
+        child: Icon(Icons.refresh),
+      ),
+    );
+  }
+
+  void appuye() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NotificationSettingsForm()),
+    );
+  }
+}

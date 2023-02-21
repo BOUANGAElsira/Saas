@@ -1,0 +1,25 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import '../Screen/NotificationService.dart';
+
+class NotificationWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Send notifications'),
+        backgroundColor: Colors.brown,
+      ),
+      body: Container(
+        color: Colors.white,
+        child: ElevatedButton(
+          child: Text('Envoyer une notification',
+          ),
+          onPressed: () {
+            NotificationService.showStudentUpdateNotification('Elsira Ema', 'Evaluation prévue pour bientôt');
+          },
+        ),
+      ),
+    );
+  }
+}

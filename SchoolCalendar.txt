@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:calendar_carousel/calendar_carousel.dart';
+
+// Créer une vue de calendrier scolaire
+class SchoolCalendarView extends StatefulWidget {
+  @override
+  _SchoolCalendarViewState createState() => _SchoolCalendarViewState();
+}
+
+class _SchoolCalendarViewState extends State<SchoolCalendarView> {
+  CalendarController _calendarController = CalendarController();
+  Map<DateTime, List> _events = {
+    DateTime(2022, 9, 15): ['Jour de l\'an'],
+    DateTime(2022, 12, 25): ['Noël'],
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Calendrier scolaire'),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TableCalendar(
+              calendarController: _calendarController,
+              events: _events,
+              holidays: _events.keys.toList(),
+              initialCalendarFormat: CalendarFormat.month,
+              startingDayOfWeek: StartingDayOfWeek.monday,
+              availableGestures: AvailableGestures.all,
+              calendarStyle: CalendarStyle(
+                todayColor: Theme.of(context).accentColor,
+                selectedColor: Theme.of(context).primaryColor,
+                holidayStyle: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              headerStyle: HeaderStyle(
+                centerHeaderTitle: true,
+                formatButtonDecoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                formatButtonTextStyle: TextStyle(color: Colors.white),
+                formatButtonShowsNext: false,
+              ),
+              onDaySelected: (date, events, holidays) {
+                // Afficher les événements et les vacances pour la date sélectionnée
+                print('Events: $events');
+                print('Holidays: $holidays');
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

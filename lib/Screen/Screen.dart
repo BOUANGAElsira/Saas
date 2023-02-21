@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:notice_2_parents/Modele/Institution.dart';
+import 'package:notice_2_parents/Screen/ChatScreen.dart';
+import 'package:notice_2_parents/Screen/Notification.dart';
+import 'package:notice_2_parents/Screen/NotificationService.dart';
+import 'package:notice_2_parents/Screen/NotificationSetting.dart';
+import 'package:notice_2_parents/Screen/SchoolCalendar.dart';
 import 'package:notice_2_parents/Screen/profile.dart';
+
+import '../Utils/Student.dart';
 
 class Screen_page extends StatefulWidget {
   const Screen_page({super.key});
@@ -70,55 +78,119 @@ class _Screen_pageState extends State<Screen_page> {
           "Home page",
           textAlign: TextAlign.center,
         ),
+        actions: [
+          IconButton(
+              onPressed: AccesChat,
+              icon: Icon(Icons.chat))
+        ],
       ),
-      body: Center(
-          //child: widgdetOptions.elementAt(selectedIndex),
-          child: Material(
-              color: Colors.blue,
-              elevation: 8,
-              borderRadius: BorderRadius.circular(18),
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              child: InkWell(
-                  onTap: () {},
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Ink.image(
-                        image: AssetImage("lib/Assets/Images/defitech.jpg"),
-                        height: 100,
-                        width: 100,
-                        fit: BoxFit.cover,
-                      ),
-                      SizedBox(height: 6),
-                      TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "Institutions",
-                            style: TextStyle(fontSize: 15, color: Colors.white),
-                          )),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      ),
-                      SizedBox(height: 6),
-                      Ink.image(
-                        image: AssetImage(
-                            "lib/Assets/Images/etudiants_africains.jpg"),
-                        height: 100,
-                        width: 100,
-                        fit: BoxFit.cover,
-                      ),
-                      SizedBox(height: 6),
-                      TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "Students",
-                            style: TextStyle(fontSize: 15, color: Colors.white),
-                          )),
-                      SizedBox(height: 6),
-                    ],
-                  )))),
-      /* drawer: Drawer(
+      body: Container(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: GridView(
+            children: [
+              Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                child: Column(
+                  children: [
+                    Ink.image(
+                      image: AssetImage("lib/Assets/Images/defitech.jpg"),
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                    ),
+                    SizedBox(height: 6),
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Institutions",
+                          style: TextStyle(fontSize: 15, color: Colors.cyan),
+                        )),
+                  ],
+                ),
+              ),
+              Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                child: Column(
+                  children: [
+                    Ink.image(
+                      image: AssetImage("lib/Assets/Images/etudiants_africains.jpg"),
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                    ),
+                    SizedBox(height: 6),
+                    TextButton(
+                        onPressed: studentInfo,
+                        child: Text(
+                          "Students",
+                          style: TextStyle(fontSize: 15, color: Colors.cyan),
+                        )),
+                  ],
+                ),
+              ),
+              Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                child: Column(
+                  children: [
+                    Ink.image(
+                      image: AssetImage("lib/Assets/Images/image_parents.jpg"),
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                    ),
+                    SizedBox(height: 6),
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Tutors",
+                          style: TextStyle(fontSize: 15, color: Colors.cyan),
+                        )),
+                  ],
+                ),
+              ),
+              Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                child: Column(
+                  children: [
+                    Ink.image(
+                      image: AssetImage("lib/Assets/Images/presence.jpeg"),
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                    ),
+                    SizedBox(height: 6),
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Presence",
+                          style: TextStyle(fontSize: 15, color: Colors.cyan),
+                        )),
+                  ],
+                ),
+              ),
+              Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                child: Column(
+                  children: [
+                    Ink.image(
+                      image: AssetImage("lib/Assets/Images/evaluation.jpg"),
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                    ),
+                    SizedBox(height: 6),
+                    TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Evaluation",
+                          style: TextStyle(fontSize: 15, color: Colors.cyan),
+                        )),
+                  ],
+                ),
+              ),
+
+            ],
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
+          ),
+        ),
+      ),
+      drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -160,7 +232,7 @@ class _Screen_pageState extends State<Screen_page> {
             ),
           ],
         ),
-      ), */
+      ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.blueGrey,
         child: Container(
@@ -186,41 +258,25 @@ class _Screen_pageState extends State<Screen_page> {
                   )),
               SizedBox.shrink(),
               IconButton(
-                  onPressed: () {},
+                  onPressed: Appuye,
                   icon: Icon(
                     Icons.notifications,
                     size: 30,
                     color: Colors.black,
+                  )),
+              SizedBox.shrink(),
+              IconButton(
+                  onPressed: appuyeCalendrier,
+                  icon: Icon(
+                    Icons.calendar_view_day,
+                    size: 30,
+                    color: Colors.black,
                   ))
+
             ],
           ),
         ),
       ),
-      /* bottomNavigationBar: Container(
-        child: BottomNavigationBar(
-          backgroundColor: Colors.blueGrey,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: "Home",
-                backgroundColor: Colors.yellow),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.notifications),
-                label: "Notifications",
-                backgroundColor: Colors.yellow),
-            BottomNavigationBarItem(
-                activeIcon: Profile_page(),
-                icon: Icon(Icons.person),
-                label: "Profile",
-                backgroundColor: Colors.yellow),
-          ],
-          currentIndex: selectedIndex,
-          selectedItemColor: Colors.purple,
-          iconSize: 30,
-          onTap: onItemTapped,
-          elevation: 10,
-        ),
-      ), */
     );
   }
 
@@ -231,13 +287,36 @@ class _Screen_pageState extends State<Screen_page> {
     );
   }
 
-  /* @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<Institution>(
-        'maListeDInstitutions', maListeDInstitutions));
-  } */
-  /*  void displayInstitution() {
-    print("On a ces institutions là");
-  } */
+  void Appuye() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NotificationPage()),
+    );
+  }
+
+  void appuyeCalendrier() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SchoolCalendarView()),
+    );
+  }
+
+  void studentInfo(){
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => StudentInfoView(studentId: '1'),
+      ),
+    );
+  }
+
+  void AccesChat(){
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChatScreen(teacherId: '1'),
+      ),
+    );
+  }
+
 }

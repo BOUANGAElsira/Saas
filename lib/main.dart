@@ -1,11 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:notice_2_parents/Auth/login_page.dart';
-import 'package:notice_2_parents/Screen/profile.dart';
+import 'Services/FirebaseMessaging.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp().catchError((error) {
+    print("Erreur d'initialisation de Firebase : $error");
+  });
   runApp(
     notice_2_parents(),
   );
+
+  //FirebaseMessagingService firebaseMessagingService = FirebaseMessagingService();
+  //firebaseMessagingService.configureFirebaseMessaging();
+  //firebaseMessagingService.requestPermission();
 }
 
 class notice_2_parents extends StatelessWidget {
@@ -20,8 +29,6 @@ class notice_2_parents extends StatelessWidget {
         primaryColor: Colors.brown,
       ),
       debugShowCheckedModeBanner: false,
-      //home: Screen_page(),
-      //home: Profile_page(),
       home: const Login_page(),
     );
   }
