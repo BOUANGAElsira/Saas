@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:notice_2_parents/Screen/NotificationService.dart';
 import 'package:notice_2_parents/Screen/NotificationSetting.dart';
@@ -8,19 +9,53 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
-  List<String> notifications = [];
 
-  void addNotification(String notification) {
-    setState(() {
-      notifications.add(notification);
-      print("Added notification: $notification");
+  int notificationCount = 0;
+
+
+  @override
+  void initState() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
     });
   }
 
-  NotificationService notificationService = NotificationService();
+  List<String> notifications = [];
 
-  void refreshNotifications() {
-    addNotification("New grade report");
+  void addNotification(String notification) {
+  setState(() {
+    notifications.add(notification);
+    notificationCount = notifications.length;
+    print("Added notification: $notification");
+  });
+}
+
+
+  NotificationService notificationService = NotificationService();
+  void newNoteNotification() {
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 1,
+        channelKey: 'basic_chanel',
+        title: 'Nouvelle absence',
+        body: 'Une nouvelle absence a été enregistrée',
+      ),
+    );
+    addNotification("Nouvelle note");
+  }
+
+  void newEvaluationNotification() {
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 2,
+        channelKey: 'basic_chanel',
+        title: 'Nouvelle remise de notes',
+        body: 'Une nouvelle note est disponible',
+      ),
+    );
+    addNotification("Nouvelle évaluation");
   }
 
   @override
@@ -37,18 +72,20 @@ class _NotificationPageState extends State<NotificationPage> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: notifications.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(notifications[index]),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.brown,
-        onPressed: refreshNotifications,
-        child: Icon(Icons.refresh),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: newNoteNotification,
+              child: Text('Remise note'),
+            ),
+            ElevatedButton(
+              onPressed: newEvaluationNotification,
+              child: Text('Nouvelle évaluation'),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -60,3 +97,4 @@ class _NotificationPageState extends State<NotificationPage> {
     );
   }
 }
+

@@ -38,11 +38,13 @@ class _Profile_PageState extends State<Profile_Page> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
+            heroTag: 'fab2',
             onPressed: () => _pickImage(ImageSource.camera),
             child: Icon(Icons.camera_alt),
           ),
           SizedBox(width: 10),
           FloatingActionButton(
+            heroTag: 'fab3',
             onPressed: () => _pickImage(ImageSource.gallery),
             child: Icon(Icons.photo_library),
           ),

@@ -1,4 +1,4 @@
-class Institution {
+/* class Institution {
   /* String sigle = "";
   String nom = "";
   String type = "";
@@ -34,3 +34,4 @@ class Institution {
     display();
   }
 }
+ */

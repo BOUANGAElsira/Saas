@@ -1,4 +1,4 @@
-import 'package:notice_2_parents/Modele/User.dart';
+/* import 'package:notice_2_parents/Modele/User.dart';
 
 class User_Preferences {
   static const myUser = User(
@@ -7,3 +7,4 @@ class User_Preferences {
     about: 'Etudiante de 20 ans à DEFITECH.',
   );
 }
+ */

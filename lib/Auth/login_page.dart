@@ -3,6 +3,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:notice_2_parents/Auth/Sign_up.dart';
 import 'package:notice_2_parents/Auth/forgot.dart';
 import 'package:notice_2_parents/Screen/Screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Login_page extends StatefulWidget {
   const Login_page({super.key});
@@ -12,42 +14,47 @@ class Login_page extends StatefulWidget {
 }
 
 class _Login_pageState extends State<Login_page> {
+  bool _isGoogleLoading = false;
+  bool _log = true;
+
+  Future<void> signInWithGoogle() async {
+    setState(() {
+      _isGoogleLoading = true;
+    });
+
+    final googleSignIn = GoogleSignIn();
+    final googleUser = await googleSignIn.signIn();
+    if (googleUser == null) {
+      setState(() {
+        _isGoogleLoading = false;
+      });
+      return;
+    }
+
+    final googleAuth = await googleUser.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    await FirebaseAuth.instance.signInWithCredential(credential);
+
+    setState(() {
+      _isGoogleLoading = false;
+    });
+  }
+
   TextEditingController nameController = TextEditingController();
   TextEditingController passwordContoller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(245, 245, 245, 220),
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        elevation: 5,
-        title: const Text(
-          "Login page",
-          style: TextStyle(
-              color: (Colors.white), fontSize: 25, fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: SingleChildScrollView(
+      backgroundColor: Colors.brown.shade400,
+        body: Center(
+      child: SingleChildScrollView(
+        padding: EdgeInsets.all(30),
         child: Column(
           children: [
-            /* Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: AnimatedOpacity(
-                opacity: activeIndex == 0 ? 1 : 0,
-                duration: Duration(
-                  seconds: 1,
-                ),
-                curve: Curves.linear,
-                child: Image.network(
-                  'https://th.bing.com/th/id/OIP.2loF-dnZj3Wix_0VgU95hgHaHa?w=172&h=180&c=7&r=0&o=5&dpr=1.1&pid=1.7',
-                  height: 400,
-                ),
-              ),
-            ), */
             SizedBox(
               height: 40,
             ),
@@ -162,7 +169,7 @@ class _Login_pageState extends State<Login_page> {
                 Text(
                   'Don\'t have an account?',
                   style: TextStyle(
-                      color: Colors.grey.shade600,
+                      color: Colors.black,
                       fontSize: 14.0,
                       fontWeight: FontWeight.w400),
                 ),
@@ -171,24 +178,29 @@ class _Login_pageState extends State<Login_page> {
                   child: Text(
                     'Sign up',
                     style: TextStyle(
-                        color: Colors.brown,
+                        color: Colors.white,
                         fontSize: 14.0,
                         fontWeight: FontWeight.w400),
                   ),
                 )
               ],
             ),
-            /*  Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              new IconButton(
-                onPressed: onPressed, icon: new Icon(Icons.))
-            ],
-          ) */
+            SizedBox(height: 16.0),
+            Text('_________________OR_________________'),
+            SizedBox(height: 16.0),
+            ElevatedButton(
+              onPressed: _isGoogleLoading ? null : signInWithGoogle,
+              child: _isGoogleLoading
+                  ? CircularProgressIndicator()
+                  : Text('Login with Google'),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.brown),
+              ),
+            ),
           ],
         ),
       ),
-    );
+    ));
   }
 
   void bouttonAppuyer() {
@@ -211,4 +223,19 @@ class _Login_pageState extends State<Login_page> {
       MaterialPageRoute(builder: (context) => Screen_page()),
     );
   }
+
+  // Fonction pour gérer le login
+/*   void login() async {
+    String email = ""; // Ajoutez ici la logique pour récupérer l'email à partir du TextField
+    String password = ""; // Ajoutez ici la logique pour récupérer le mot de passe à partir du TextField
+
+ */ /*     // Exécution de la requête d'insertion des identifiants dans la base de données
+    await conn.query('INSERT INTO users (login, userPassword) VALUES (?, ?)',
+        [email, password]);
+
+    // Fermeture de la connexion à la base de données
+    await conn.close();
+  }*/
 }
+
+//package:notice_2_parents/Models/mysql.dart

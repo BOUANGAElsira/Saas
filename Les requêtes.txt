@@ -216,5 +216,43 @@ CREATE TABLE Person(
     type ENUM('teacher', 'parent', 'tutor', 'users', 'responsable', 'student') NOT NULL
 );
 ##################################################################
+ALTER TABLE Student
+ADD COLUMN idEvaluation INT,
+ADD COLUMN idSubject INT,
+ADD CONSTRAINT idEvaluation
+    FOREIGN KEY (idEvaluation) REFERENCES Evaluation(idEvaluation),
+ADD CONSTRAINT idSubject
+    FOREIGN KEY (idSubject) REFERENCES Subject(idSubject);
+
+
+ALTER TABLE period 
+ADD COLUMN idBulletin Int,
+ADD CONSTRAINT idBulletin
+FOREIGN key (idBulletin) REFERENCES bulletin (idBulletin);
+
+ALTER TABLE porter_sur
+ADD COLUMN idPorterSur int,
+ADD CONSTRAINT idPorterSur PRIMARY key AUTO_INCREMENT
+######################################################################
+
+POur stocker des fichier blob 
+POST http://127.0.0.1:5000/inscription/add
+Content-Type: application/json
+
+{
+    "identificationNumber": 2,
+    "idYear": 1,
+    "idClass": 1,
+    "pdfFilePath": "/chemin/vers/fichier.pdf"
+}
+
+
+import os
+
+pdf_file_path = request.json.get('pdfFilePath')
+with open(pdf_file_path, 'rb') as f:
+    pdf_content = f.read()
+    # Enregistrer le contenu du fichier PDF sur le serveur
+
 
 Insertion 3 lignes 

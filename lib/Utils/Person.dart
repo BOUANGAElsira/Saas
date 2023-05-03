@@ -1,5 +1,4 @@
-
-class Person {
+/* class Person {
   final int idPerson;
   final String name;
   final String firstName;
@@ -19,4 +18,9 @@ class Person {
     required this.address,
     //required this.CNI
   });
+
+  toJson() {}
+
+  static fromJson(json) {}
 }
+ */

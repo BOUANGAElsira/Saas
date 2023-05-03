@@ -1,0 +1,58 @@
+Pour les FloatingActionButton quand j'en ajoute, toujours mettre avant le onPressed: heroTag: 'fab4'
+
+
+Pour envoyer une notification
+void sendNotification(int idParent, int idTutor, String type, int idAbsence) {
+  // Récupérer les informations du parent/tuteur et de l'absence depuis la base de données
+  Parent parent = getParentById(idParent);
+  Tutor tutor = getTutorById(idTutor);
+  Absence absence = getAbsenceById(idAbsence);
+
+  // Construire le message de la notification
+  String message = "Votre enfant/élève était absent le ${absence.startDate}.";
+  if (absence.observation.isNotEmpty) {
+    message += " Observations : ${absence.observation}.";
+  }
+  if (absence.justification.isNotEmpty) {
+    message += " Justification : ${absence.justification}.";
+  }
+
+  // Envoyer la notification par email ou par SMS selon le type spécifié
+  if (type == "Notification d'absence par email") {
+    sendEmail(parent.email, "Notification d'absence", message);
+  } else if (type == "Notification d'absence par SMS") {
+    sendSms(parent.phoneNumber, message);
+  } else if (type == "Notification d'absence par email et par SMS") {
+    sendEmail(parent.email, "Notification d'absence", message);
+    sendSms(parent.phoneNumber, message);
+  }
+
+  // Enregistrer la notification dans la base de données
+  Notification notification = new Notification(
+    object: "Accusé d'une absence",
+    type: type,
+    sendPeriod: DateTime.now().toString(),
+    idStatus: 1,
+    idEvaluation: absence.idEvaluation,
+    idAbsence: idAbsence,
+    idTutor: idTutor,
+    idParent: idParent,
+    idBulletin: absence.idBulletin
+  );
+  saveNotification(notification);
+}
+
+
+execution
+class Absence {
+  // ...
+
+  void add_absence(Absence new_absence) {
+    // ajouter l'absence à la base de données
+
+    // envoyer une notification parentale ou tutélaire
+    Notification.send_notification_to_parent(new_absence);
+  }
+
+  // ...
+}

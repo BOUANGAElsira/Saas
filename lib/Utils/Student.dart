@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'Person.dart';
 import 'dart:typed_data';
 
@@ -103,3 +103,4 @@ class _StudentInfoViewState extends State<StudentInfoView> {
   }
 }
 
+ */

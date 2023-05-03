@@ -70,6 +70,7 @@ class _NotificationSettingsFormState extends State<NotificationSettingsForm> {
           ],
         ),
       ),
+
     );
   }
 }

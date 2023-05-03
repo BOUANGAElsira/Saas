@@ -1,6 +1,356 @@
+#Requêtes concernant tutor
 POST http://127.0.0.1:5000/tutor/add
 Content-Type: application/json
 
 {
-    "functionTutor": "DG"
+    "functionTutor": "Directeur"
 }
+
+###
+GET http://127.0.0.1:5000/tutor/get/1
+
+
+###
+GET http://127.0.0.1:5000/tutor/get
+
+#Requêtes concernant schoolYear
+###
+POST http://127.0.0.1:5000/schoolyear/add
+Content-Type: application/json
+
+{
+    "startDate": "2021-10-10",
+    "endDate": "2022-06-26",
+    "wording": "Année scolaire",
+    "state": 1
+}
+
+#Requêtes concernant period
+###
+POST http://127.0.0.1:5000/period/add
+Content-Type: application/json
+
+{
+    "name": "Harmattan",
+    "startDate": "2022-10-10",
+    "endDate": "2022-02-23",
+    "state": true,
+    "idYear": 2,
+    "idBulletin": 1
+}
+
+
+#Requêtes concernant law
+###
+POST http://127.0.0.1:5000/law/add
+Content-Type: application/json
+
+{
+
+}
+
+
+
+#Requêtes concernant profil
+###
+POST http://127.0.0.1:5000/profil/add
+Content-Type: application/json
+
+{
+    "idLaw": 1
+}
+
+
+#Requêtes concernant group
+###
+POST http://127.0.0.1:5000/groupp/add
+Content-Type: application/json
+
+{
+    "idProfil": 1
+}
+
+#Requêtes concernant subscription
+###
+POST http://127.0.0.1:5000/subscription/add
+Content-Type: application/json
+
+{
+    "yearSubscription": "2021",
+    "startDate": "2021-10-04",
+    "endDate": "2022-05-20",
+    "idYear": 2
+}
+
+
+#Requêtes concernant responsable
+###
+POST http://127.0.0.1:5000/responsable/add
+Content-Type: application/json
+
+{
+    "startFunction": "1995-09-15",
+    "endFunction": "2010-10-10"
+}
+
+#Requêtes concernat etablishment
+###
+POST http://127.0.0.1:5000/etablishment/add
+Content-Type: application/json
+
+{
+    "acronym": "LG",
+    "name": "Louis-Grégory",
+    "type": "Université",
+    "idSubscription": 1,
+    "idResponsable": 1
+}
+
+###
+GET http://127.0.0.1:5000/etablishment/get
+
+#Requêtes concernant notificationjournal
+###
+POST http://127.0.0.1:5000/notificationjournal/add
+Content-Type: application/json
+
+{
+    "startDate": "2021-02-10",
+    "sendTime":"14:02:25",
+    "acknowledgeReception": "Notification reçue !"
+}
+
+#Requêtes concernat bulletin
+###
+POST http://127.0.0.1:5000/bulletin/add
+Content-Type: application/json
+
+{
+    "wording": "Assez bien",
+    "opinion": "Double d'effort",
+    "average": 12.01
+}
+
+#Requêtes concernat evaluation
+###
+POST http://127.0.0.1:5000/evaluation/add
+Content-Type: application/json
+
+{
+    "rating": 15,
+    "startDate": "2021-12-15",
+    "endDate": "2021-12-20",
+    "type": "Devoir",
+    "appreciation": "Bien"
+}
+
+###
+GET  http://127.0.0.1:5000/evaluation/get
+
+###
+DELETE http://127.0.0.1:5000/evaluation/2
+
+###
+PUT http://127.0.0.1:5000//evaluation/1
+Content-Type: application/json
+
+{
+    "rating": 10,
+    "startDate": "2021-12-15",
+    "endDate": "2021-12-20",
+    "type": "Devoir",
+    "appreciation": "Passable"
+}
+
+#Requêtes concernant seance
+###
+POST http://127.0.0.1:5000/seance/add
+Content-Type: application/json
+
+{
+    "startDate": "2021-11-03",
+    "duration": "02:30:00",
+    "type": "Cours"
+}
+
+#Requêtes concernant porter_sur
+###
+POST  http://127.0.0.1:5000/porter_sur/add
+Content-Type: application/json
+
+{
+    "idEvaluation": 1,
+    "idBulletin": 2
+}
+
+
+#Requêtes concernant teacher
+###
+POST http://127.0.0.1:5000/teacher/add
+Content-Type: application/json
+
+{
+    "category": "Docteur"
+}
+
+
+#Requêtes concernant class
+###
+POST  http://127.0.0.1:5000/classe/add
+Content-Type: application/json
+
+{
+    "name": "Génie logiciel",
+    "room": "Licence 3",
+    "idYear": 2,
+    "acronym": "UL",
+    "idEvaluation": 1
+}
+
+
+#Requêtes concernant subject
+###
+POST http://127.0.0.1:5000/subject/add
+Content-Type: application/json
+
+{
+    "name": "Système d'information",
+    "idTeacher": 1,
+    "idClass": 1,
+    "idSeance": 1
+}
+
+
+#Requêtes concernant student
+###
+POST http://127.0.0.1:5000/student/add
+Content-Type: application/json
+
+{
+    "abandon": 1,
+    "acronym": "UL",
+    "idTutor": 1,
+    "idEvaluation": 3,
+    "idSubject": 1,
+    "idPerson": 1
+}
+
+###
+GET http://127.0.0.1:5000/student/get
+
+###
+PUT http://127.0.0.1:5000/student/1
+Content-Type: application/json
+
+{
+    "abandon": 1,
+    "acronym": "UL",
+    "idTutor": 1,
+    "idEvaluation": 2,
+    "idSubject": 1
+}
+###
+DELETE  http://127.0.0.1:5000/student/4
+
+#Requêtes concernant inscription
+###
+POST http://127.0.0.1:5000/inscription/add
+Content-Type: application/json
+
+{
+    "identificationNumber": 2,
+    "idYear": 1,
+    "idClass": 1
+}
+
+
+#Requêtes concernant parent
+###
+POST http://127.0.0.1:5000/parent/add
+Content-Type: application/json
+
+{
+    "functionParent": "Directeur de Togocom",
+    "identificationNumber": 2
+}
+
+###
+GET http://127.0.0.1:5000/parent/get
+
+###
+GET http://127.0.0.1:5000/parent/get/2
+
+#Requêtes concernant absence
+###
+POST http://127.0.0.1:5000/absence/add
+Content-Type: application/json
+
+{
+    "startDate": "2023-01-26",
+    "endDate": "2023-01-26",
+    "observation": "2 heures d'absence, soit la totalite du cours",
+    "justification": "Malade",
+    "justificationPiece": "/assets/justificatif-absence.jpg",
+    "idSeance": 1,
+    "identificationNumber": 2
+}
+
+###
+GET http://127.0.0.1:5000/absence/get
+
+###
+GET http://127.0.0.1:5000/absence/get/1
+
+
+#Requêtes concernant notification
+###
+POST http://127.0.0.1:5000/notification/add
+Content-Type: application/json
+
+{
+    "object": "Accusé d'une absence lors d'une cours de ce matin",
+    "type": "Notification d'absence",
+    "sendPeriod": "2021-01-26",
+    "idStatus": 1,
+    "idEvaluation": 1,
+    "idAbsence": 1,
+    "idTutor": 1,
+    "idParent": 2,
+    "idBulletin": 1
+}
+
+###
+GET http://127.0.0.1:5000/notification/get
+
+
+#Requêtes concernant users
+###
+POST http://127.0.0.1:5000/users/add
+Content-Type:  application/json
+
+{
+    "login": "ema@gamil.com",
+    "userPassword": "12345678",
+    "state": true,
+    "type": "parent"
+}
+
+
+#Requêtes concernant person
+###
+POST http://127.0.0.1:5000/person/add
+Content-Type: application/json
+
+{
+    "name": "ELSIRA",
+    "firstname": "Ema",
+    "email": "elsiema@gamil.com",
+    "mobilPhone": "+228 70605040",
+    "fixedPhone": "+228 25303540",
+    "address": "Hédzranawoé",
+    "CNI": "/assets/issaka_braqueur.jpg",
+    "photo": "/assets/photo.jpg",
+    "type": "student"
+}
+###
+GET http://127.0.0.1:5000/person/get

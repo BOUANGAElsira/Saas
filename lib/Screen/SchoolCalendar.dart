@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 
 class SchoolCalendarView extends StatefulWidget {
   const SchoolCalendarView({Key? key}) : super(key: key);
@@ -13,3 +13,4 @@ class _SchoolCalendarViewState extends State<SchoolCalendarView> {
     return const Placeholder();
   }
 }
+ */
